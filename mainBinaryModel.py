@@ -87,13 +87,14 @@ class logit:
 
         def learn(x, y, B, v, maxIterations, minGrad):
             '''
-            ~~Newton Raphson method~~
-            is iteration > maxIterations?
+            ~~Newton Raphson / Gradient descent method~~
+            Is iteration > maxIterations?
                 if yes, quit and return B and error
-            get dLL, d2LL
-            check if dervive is above threshold
-                if yes update B
-                if not quit and return B
+            else
+                get dLL, d2LL
+                check if (mean) dervive is above threshold
+                    if yes update B
+                    if not quit and return B
             '''
             iter = 0 #EDGE - avoids maxIterations = 0 from causing error
             for iter in range(maxIterations):
@@ -111,7 +112,7 @@ class logit:
                         print("    Gradient:      {0}".format(dLL))
                         print("____________________________________")
             if v:
-                print("Number of Newton-Raphson iterations: {0}".format(iter))
+                print("Number of iterations: {0}".format(iter))
                 print("Fitted Values: {0}".format(B))
                 print("____________________________________")
             self.iter = iter
@@ -122,7 +123,7 @@ class logit:
 
 
     def __repr__(self):
-        return "Number of Newton-Raphson iterations: {0} \nFitted Values: {1}".format(self.iter, self.coefficients)
+        return "Number of iterations: {0} \nFitted Values: {1}".format(self.iter, self.coefficients)
 
     def predict(self, x=[]):
         if len(x) == 0:
