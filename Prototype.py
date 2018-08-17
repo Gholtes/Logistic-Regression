@@ -15,7 +15,7 @@ y = (np.array(dt[["y"]]))
 # x = np.array(dt[["x1", "x2", "x3"]])
 x = np.array(dt[["x1"]])
 
-const_ = np.ones(dt.shape[0]) #Add intercept
+const_ = np.ones(x.shape[0]) #Add intercept
 x = np.c_[const_, x]
 #init coeff
 B = np.random.rand(1, x.shape[1])
@@ -25,6 +25,7 @@ def logit(x, B): #CHECKED
     XB = np.matmul(B, np.transpose(x))
     denom = np.add(1, np.exp(np.negative(XB)))
     return np.transpose(np.add(np.divide(1, denom), exp_corr)) #TODO
+
 def dlogLik_dB(x, y, B):
     '''Returns a row vector 1xK+1 for each B'''
     y_SXB = np.add(y, np.negative(logit(x, B)))
@@ -54,7 +55,7 @@ def updateB(B, dLL, d2LL, n=n, method = "NR"):
         dll_d2LL = np.multiply(n, np.divide(dLL, d2LL))
         return np.add(B, dll_d2LL)
     elif method == "GD":
-        ''' GRAD DECENT method'''
+        ''' ~~Gradient descent method~~'''
         return np.add(B, np.multiply(n, dLL))
     #SCORE METHOD
     # dll_d2LL = np.matmul(score(x, y, B), np.linalg.inv(Hessian(x, y, B)))
@@ -91,20 +92,13 @@ def learn(x, y, B, maxIterations = 500, min_grad = 0.00001):
 
 B = learn(x, y, B)
 y_ = logit(x, B)
-
-
-
-# XB = np.squeeze(np.matmul(B, np.transpose(x)))
-# y_lin = logit(x, B_)
 x1 = dt["x1"]
 x2 = dt["x2"]
 x3 = dt["x3"]
-# y = dt["y"]
 
-# print(x)
-# print(y)
-plt.plot(x1,y_, "g.")
-plt.plot(x1,y, "yo")
-# plt.plot(XB,y_, "g.")
-# plt.plot(XB,y, "r.")
+plt.plot(x1,y, ".")
+plt.plot(x1,y_, "b.")
+# plt.plot(x3,y_, "r.")
+# plt.plot(x2,y_, "g.")
+
 plt.show()

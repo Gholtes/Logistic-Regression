@@ -6,10 +6,10 @@ logit <- function(x) {
 }
 
 x1 = rnorm(1000)
-x2 = rnorm(1000)
+x2 = 2*rnorm(1000)
 x3 = rnorm(1000)
 xb = 3*x1 - 2*x2 + x3 + rnorm(1000)
-xb_ = 3*x1 - 2*x2 + x3
+xb_ = 3*x1 - 4*x2 + 7*x3
 y = round(logit(xb))
 
 df = as.data.frame(y)
